@@ -66,6 +66,7 @@ class Plugin {
    */
   private function include_skins_files() {
       require_once( __DIR__ . '/skins/posts/skin-slide.php' );
+      require_once( __DIR__ . '/skins/button/skin-simple.php' );
   }
   /**
    * Register Widgets
@@ -75,13 +76,17 @@ class Plugin {
    * @since 0.0.1
    * @access public
    */
-  public function register_skins() {
-      // Its is now safe to include Widgets skins
-      $this->include_skins_files();
-      // Register skin
-      add_action( 'elementor/widget/posts/skins_init', function( $widget ) {
-         $widget->add_skin( new Posts\Skin_Slide($widget) );
-      } );
+public function elementor_init() {
+    // Its is now safe to include Widgets skins
+    $this->include_skins_files();
+    // Register skin
+    add_action( 'elementor/widget/posts/skins_init', function( $widget ) {
+       $widget->add_skin( new Posts\Skin_Slide($widget) );
+    } );
+
+    add_action( 'elementor/widget/button/skins_init', function( $widget ) {
+       $widget->add_skin( new Button\Skin_Simple($widget) );
+    } );
   }
 
   /**
@@ -93,12 +98,12 @@ class Plugin {
    * @access public
    */
   public function __construct() {
-      // Register widget scripts
-      add_action( 'elementor/frontend/after_register_scripts', [ $this, 'widget_scripts' ] );
+    // Register widget scripts
+    add_action( 'elementor/frontend/after_register_scripts', [ $this, 'widget_scripts' ] );
 
-      add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'widget_styles' ] );
-      // Register skins
-      add_action( 'elementor/widgets/widgets_registered', [ $this, 'register_skins' ] );
+    add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'widget_styles' ] );
+
+    add_action( 'elementor/init', [ $this, 'elementor_init' ], 0 );
   }
 }
 Plugin::instance();
