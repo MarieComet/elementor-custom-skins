@@ -176,7 +176,7 @@ class Skin_Simple extends Skin_Base {
 		?>
 		<div <?php echo $this->parent->get_render_attribute_string( 'wrapper' ); ?>>
 			<a <?php echo $this->parent->get_render_attribute_string( 'button' ); ?>>
-				<?php $this->render_text(); ?>
+				<?php echo $settings['text']; ?>
 			</a>
 		</div>
 		<?php
@@ -194,22 +194,6 @@ class Skin_Simple extends Skin_Base {
 			return '';
 		}
 	  	return $content;
-	}
-
-	/**
-	 * Render button text.
-	 *
-	 * Render button widget text.
-	 *
-	 * @since 1.5.0
-	 * @access protected
-	 */
-	protected function render_text() {
-		$settings = $this->parent->get_settings_for_display();
-
-		?>
-		<?php echo $settings['text']; ?>
-		<?php
 	}
 
 }
