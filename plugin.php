@@ -41,7 +41,7 @@ class Plugin {
    * @access public
    */
   public function widget_scripts() {
-      wp_register_script( 'posts-skin-slide', plugins_url( '/assets/js/posts-skin-slide.js', __FILE__ ), [ 'jquery' ], false, true );      
+      wp_register_script( 'posts-skin-slide', plugins_url( '/assets/js/elementor-custom-skins.js', __FILE__ ), [ 'jquery' ], false, true );      
   }
 
   /**
@@ -51,9 +51,7 @@ class Plugin {
    *
   */
   public function widget_styles() { 
-
-      wp_enqueue_style( 'elementor-custom-skins', plugins_url( 'assets/css/elementor-custom-skins.css', __FILE__ ) );
-
+    wp_enqueue_style( 'elementor-custom-skins', plugins_url( 'assets/css/elementor-custom-skins.css', __FILE__ ) );
   }
 
   /**
@@ -65,7 +63,6 @@ class Plugin {
    * @access private
    */
   private function include_skins_files() {
-      require_once( __DIR__ . '/skins/posts/skin-slide.php' );
       require_once( __DIR__ . '/skins/button/skin-simple.php' );
   }
   /**
@@ -80,10 +77,6 @@ public function elementor_init() {
     // Its is now safe to include Widgets skins
     $this->include_skins_files();
     // Register skin
-    add_action( 'elementor/widget/posts/skins_init', function( $widget ) {
-       $widget->add_skin( new Posts\Skin_Slide($widget) );
-    } );
-
     add_action( 'elementor/widget/button/skins_init', function( $widget ) {
        $widget->add_skin( new Button\Skin_Simple($widget) );
     } );
@@ -99,9 +92,9 @@ public function elementor_init() {
    */
   public function __construct() {
     // Register widget scripts
-    add_action( 'elementor/frontend/after_register_scripts', [ $this, 'widget_scripts' ] );
+    //add_action( 'elementor/frontend/after_register_scripts', [ $this, 'widget_scripts' ] );
 
-    add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'widget_styles' ] );
+    //add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'widget_styles' ] );
 
     add_action( 'elementor/init', [ $this, 'elementor_init' ], 0 );
   }
