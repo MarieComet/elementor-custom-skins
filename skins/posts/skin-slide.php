@@ -1,5 +1,5 @@
 <?php
-namespace MC_Custom_Skins\Posts;
+namespace MCElementorCustomSkins\Posts;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Css_Filter;

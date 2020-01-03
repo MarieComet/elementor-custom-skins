@@ -1,7 +1,5 @@
 <?php
-namespace MC_Custom_Skins;
-
-use MC_Custom_Skins\Posts\Skin_Slide;
+namespace MCElementorCustomSkins;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -10,7 +8,7 @@ class Plugin {
   /**
    * Instance
    *
-   * @since 1.2.0
+   * @since 0.0.1
    * @access private
    * @static
    *
@@ -22,7 +20,7 @@ class Plugin {
    *
    * Ensures only one instance of the class is loaded or can be loaded.
    *
-   * @since 1.2.0
+   * @since 0.0.1
    * @access public
    *
    * @return Plugin An instance of the class.
@@ -39,7 +37,7 @@ class Plugin {
    *
    * Load required plugin core files.
    *
-   * @since 1.2.0
+   * @since 0.0.1
    * @access public
    */
   public function widget_scripts() {
@@ -60,27 +58,26 @@ class Plugin {
   }
 
   /**
-   * Include Widgets files
+   * Include Widgets skins
    *
-   * Load widgets files
+   * Load widgets skins
    *
-   * @since 1.2.0
+   * @since 0.0.1
    * @access private
    */
   private function include_skins_files() {
       require_once( __DIR__ . '/skins/posts/skin-slide.php' );
-      //require_once( __DIR__ . '/widgets/inline-editing.php' );
   }
   /**
    * Register Widgets
    *
    * Register new Elementor widgets.
    *
-   * @since 1.2.0
+   * @since 0.0.1
    * @access public
    */
-  public function register_widgets() {
-      // Its is now safe to include Widgets files
+  public function register_skins() {
+      // Its is now safe to include Widgets skins
       $this->include_skins_files();
       // Register skin
       add_action( 'elementor/widget/posts/skins_init', function( $widget ) {
@@ -93,7 +90,7 @@ class Plugin {
    *
    * Register plugin action hooks and filters
    *
-   * @since 1.2.0
+   * @since 0.0.1
    * @access public
    */
   public function __construct() {
@@ -101,8 +98,8 @@ class Plugin {
       //add_action( 'elementor/frontend/after_register_scripts', [ $this, 'widget_scripts' ] );
 
       add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'widget_styles' ] );
-      // Register widgets
-      add_action( 'elementor/widgets/widgets_registered', [ $this, 'register_widgets' ] );
+      // Register skins
+      add_action( 'elementor/widgets/widgets_registered', [ $this, 'register_skins' ] );
   }
 }
-new Plugin();
+Plugin::instance();

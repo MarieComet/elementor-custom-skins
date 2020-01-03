@@ -16,18 +16,18 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 define( 'ELEMENTOR_CUSTOM_SKINS__FILE__', __FILE__ );
 
 /**
- * Main Elementor Test Extension Class
+ * Main Elementor Elementor Custom Skins Class
  *
  * The main class that initiates and runs the plugin.
  *
- * @since 1.0.0
+ * @since 0.0.1
  */
 final class MC_Elementor_Custom_Skins {
 
     /**
      * Plugin Version
      *
-     * @since 1.0.0
+     * @since 0.0.1
      *
      * @var string The plugin version.
      */
@@ -36,7 +36,7 @@ final class MC_Elementor_Custom_Skins {
     /**
      * Minimum Elementor Version
      *
-     * @since 1.0.0
+     * @since 0.0.1
      *
      * @var string Minimum Elementor version required to run the plugin.
      */
@@ -45,16 +45,16 @@ final class MC_Elementor_Custom_Skins {
     /**
      * Minimum PHP Version
      *
-     * @since 1.0.0
+     * @since 0.0.1
      *
      * @var string Minimum PHP version required to run the plugin.
      */
-    const MINIMUM_PHP_VERSION = '5.4';
+    const MINIMUM_PHP_VERSION = '7.0';
 
     /**
      * Instance
      *
-     * @since 1.0.0
+     * @since 0.0.1
      *
      * @access private
      * @static
@@ -68,7 +68,7 @@ final class MC_Elementor_Custom_Skins {
      *
      * Ensures only one instance of the class is loaded or can be loaded.
      *
-     * @since 1.0.0
+     * @since 0.0.1
      *
      * @access public
      * @static
@@ -87,7 +87,7 @@ final class MC_Elementor_Custom_Skins {
     /**
      * Constructor
      *
-     * @since 1.0.0
+     * @since 0.0.1
      *
      * @access public
      */
@@ -107,7 +107,7 @@ final class MC_Elementor_Custom_Skins {
      *
      * Fired by `init` action hook.
      *
-     * @since 1.0.0
+     * @since 0.0.1
      *
      * @access public
      */
@@ -126,7 +126,7 @@ final class MC_Elementor_Custom_Skins {
      *
      * Fired by `plugins_loaded` action hook.
      *
-     * @since 1.0.0
+     * @since 0.0.1
      *
      * @access public
      */
@@ -159,7 +159,7 @@ final class MC_Elementor_Custom_Skins {
      *
      * Warning when the site doesn't have Elementor installed or activated.
      *
-     * @since 1.0.0
+     * @since 0.0.1
      *
      * @access public
      */
@@ -169,9 +169,9 @@ final class MC_Elementor_Custom_Skins {
 
         $message = sprintf(
             /* translators: 1: Plugin name 2: Elementor */
-            esc_html__( '"%1$s" requires "%2$s" to be installed and activated.', 'elementor-button-fixed' ),
-            '<strong>' . esc_html__( 'Elementor Test Extension', 'elementor-button-fixed' ) . '</strong>',
-            '<strong>' . esc_html__( 'Elementor', 'elementor-button-fixed' ) . '</strong>'
+            esc_html__( '"%1$s" requires "%2$s" to be installed and activated.', 'elementor-custom-skins' ),
+            '<strong>' . esc_html__( 'Elementor Custom Skins', 'elementor-custom-skins' ) . '</strong>',
+            '<strong>' . esc_html__( 'Elementor', 'elementor-custom-skins' ) . '</strong>'
         );
 
         printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message );
@@ -183,7 +183,7 @@ final class MC_Elementor_Custom_Skins {
      *
      * Warning when the site doesn't have a minimum required Elementor version.
      *
-     * @since 1.0.0
+     * @since 0.0.1
      *
      * @access public
      */
@@ -193,9 +193,9 @@ final class MC_Elementor_Custom_Skins {
 
         $message = sprintf(
             /* translators: 1: Plugin name 2: Elementor 3: Required Elementor version */
-            esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', 'elementor-button-fixed' ),
-            '<strong>' . esc_html__( 'Elementor Test Extension', 'elementor-button-fixed' ) . '</strong>',
-            '<strong>' . esc_html__( 'Elementor', 'elementor-button-fixed' ) . '</strong>',
+            esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', 'elementor-custom-skins' ),
+            '<strong>' . esc_html__( 'Elementor Custom Skins', 'elementor-custom-skins' ) . '</strong>',
+            '<strong>' . esc_html__( 'Elementor', 'elementor-custom-skins' ) . '</strong>',
              self::MINIMUM_ELEMENTOR_VERSION
         );
 
@@ -208,7 +208,7 @@ final class MC_Elementor_Custom_Skins {
      *
      * Warning when the site doesn't have a minimum required PHP version.
      *
-     * @since 1.0.0
+     * @since 0.0.1
      *
      * @access public
      */
@@ -218,9 +218,9 @@ final class MC_Elementor_Custom_Skins {
 
         $message = sprintf(
             /* translators: 1: Plugin name 2: PHP 3: Required PHP version */
-            esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', 'elementor-button-fixed' ),
-            '<strong>' . esc_html__( 'Elementor Test Extension', 'elementor-button-fixed' ) . '</strong>',
-            '<strong>' . esc_html__( 'PHP', 'elementor-button-fixed' ) . '</strong>',
+            esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', 'elementor-custom-skins' ),
+            '<strong>' . esc_html__( 'Elementor Custom Skins', 'elementor-custom-skins' ) . '</strong>',
+            '<strong>' . esc_html__( 'PHP', 'elementor-custom-skins' ) . '</strong>',
              self::MINIMUM_PHP_VERSION
         );
 
