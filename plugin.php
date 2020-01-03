@@ -41,8 +41,7 @@ class Plugin {
    * @access public
    */
   public function widget_scripts() {
-      //wp_register_script( 'button-fixed-js', plugins_url( '/assets/js/button-fixed.js', __FILE__ ), [ 'jquery' ], false, true );
-      
+      wp_register_script( 'posts-skin-slide', plugins_url( '/assets/js/posts-skin-slide.js', __FILE__ ), [ 'jquery' ], false, true );      
   }
 
   /**
@@ -95,7 +94,7 @@ class Plugin {
    */
   public function __construct() {
       // Register widget scripts
-      //add_action( 'elementor/frontend/after_register_scripts', [ $this, 'widget_scripts' ] );
+      add_action( 'elementor/frontend/after_register_scripts', [ $this, 'widget_scripts' ] );
 
       add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'widget_styles' ] );
       // Register skins

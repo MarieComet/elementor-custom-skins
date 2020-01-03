@@ -1,14 +1,9 @@
 <?php
 namespace MCElementorCustomSkins\Posts;
 
+use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Css_Filter;
-use Elementor\Group_Control_Image_Size;
-use Elementor\Group_Control_Typography;
-use Elementor\Scheme_Color;
-use Elementor\Scheme_Typography;
-use Elementor\Skin_Base as Elementor_Skin_Base;
-use ElementorPro\Modules\Posts\Skins\Skin_Classic;
+use ElementorPro\Modules\Posts\Skins\Skin_Classic as Skin_Classic;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -19,103 +14,92 @@ class Skin_Slide extends Skin_Classic {
 	}
 
 	public function get_title() {
-		return __( 'custom', 'elementor-pro' );
-	}
-	/*public function render() { 
-		$this->parent->query_posts();
-
-		$wp_query = $this->parent->get_query();
-
-		if ( ! $wp_query->found_posts ) {
-			return;
-		}
-
-		add_filter( 'excerpt_more', [ $this, 'filter_excerpt_more' ], 20 );
-		add_filter( 'excerpt_length', [ $this, 'filter_excerpt_length' ], 20 );
-
-		//$this->render_loop_header();
-
-		while ( $wp_query->have_posts() ) {
-			$wp_query->the_post();
-
-			$this->render_post();
-		}
-
-		//$this->render_loop_footer();
-
-		wp_reset_postdata();
-
-		remove_filter( 'excerpt_length', [ $this, 'filter_excerpt_length' ], 20 );
-		remove_filter( 'excerpt_more', [ $this, 'filter_excerpt_more' ], 20 );
-	}
-	public function render_amp() {
-
+		return __( 'Slide', 'elementor-custom-skins' );
 	}
 
-	protected function render_row_header() {
-		?>
-		<div class="elementor-post__text row">
-		<?php
+	protected function _register_controls_actions() {
+		parent::_register_controls_actions();
+
+		add_action( 'elementor/element/posts/section_pagination/after_section_end', [ $this, 'register_pagination_controls' ] );
 	}
 
-	protected function render_row_footer() {
-		?>
-		</div>
-		<?php
+	public function register_pagination_controls( Widget_Base $widget ) {
+
+		// edit parent widget controls
+		$this->parent = $widget;
+
+		// update widget parent existing control
+		$this->parent->update_control(
+			'pagination_type',
+			[
+				'label' => __( 'Pagination', 'elementor-custom-skins' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'dots',
+				'options' => [
+					'dots' => __( 'Dots', 'elementor-custom-skins' ),
+					'arrows' => __( 'Arrows', 'elementor-custom-skins' ),
+					'dots_arrows' => __( 'Dots & Arrows', 'elementor-custom-skins' ),
+				],
+			]
+		);
+
+		// delete widget parent existing control
+		$this->parent->remove_control( 'pagination_page_limit' );
+		$this->parent->remove_control( 'pagination_align' );
 	}
 
-	protected function render_custom_content() {
-		?>
-		Custom_content
-		<?php
-	}*/
+	protected function render_loop_header() {
+		// enqueue slider script
+		wp_enqueue_script( 'posts-skin-slide' );
 
-	protected function render_thumbnail() {
-		$thumbnail = $this->get_instance_value( 'thumbnail' );
-
-		if ( 'none' === $thumbnail && ! Plugin::elementor()->editor->is_edit_mode() ) {
-			return;
-		}
-
-		$settings = $this->parent->get_settings();
-		$setting_key = $this->get_control_id( 'thumbnail_size' );
-		$settings[ $setting_key ] = [
-			'id' => get_post_thumbnail_id(),
+		// add custom CSS classes
+		$classes = [
+			'elementor-posts-container',
+			'elementor-posts',
+			'swiper-wrapper',
+			$this->get_container_class(),
 		];
-		$thumbnail_html = Group_Control_Image_Size::get_attachment_image_html( $settings, $setting_key );
 
-		if ( empty( $thumbnail_html ) ) {
-			$thumbnail_html = '<img src="'.plugins_url( 'default.jpg', __FILE__ ).'"/>';
-		}
+		$this->parent->add_render_attribute( 'container', [
+			'class' => $classes,
+		] );
+
 		?>
-		<a class="elementor-post__thumbnail__link" href="<?php echo get_permalink(); ?>">
-			<div class="elementor-post__thumbnail">
-				<?php echo $thumbnail_html; 
-
-				$this->render_post_content(); ?>
-			</div>
-		</a>
+		<div class="swiper-container swiper-container-horizontal">
+			<div <?php echo $this->parent->get_render_attribute_string( 'container' ); ?>>
 		<?php
 	}
 
-	protected function render_post_content() {
+	protected function render_post_header() {
+		// add "swiper-slide" class to posts
 		?>
-		<div class="elementor-post__post-content">
+		<article <?php post_class( [ 'elementor-post elementor-grid-item swiper-slide' ] ); ?>>
+		<?php
+	}
+
+	protected function render_loop_footer() {
+		// display slider pagination
+		?>
+			</div>
 			<?php
-			$this->render_text_header();
-			$this->render_title();
-			$this->render_meta_data();
-			$this->render_excerpt();
-			$this->render_read_more();
-			$this->render_text_footer();
+			$parent_settings = $this->parent->get_settings();
+			$parent_pagination_type = $parent_settings['pagination_type'];
+
+			if ( 'dots' === $parent_pagination_type || 'dots_arrows' === $parent_pagination_type ) {
+				?>
+				<div class="swiper-pagination swiper-pagination-bullets"></div>
+				<?php
+			}
+
+			if ( 'arrows' === $parent_pagination_type || 'dots_arrows' === $parent_pagination_type ) {
+				?>
+				<div class="swiper-button-prev"></div>
+				<div class="swiper-button-next"></div>
+				<?php
+			}
 			?>
 		</div>
 		<?php
 	}
 
-	protected function render_post() {
-		$this->render_post_header();
-		$this->render_thumbnail();
-		$this->render_post_footer();
-	}
 }
